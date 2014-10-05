@@ -14,6 +14,7 @@ It can be included in any PHP project and works on the fly.
 
 ## Installation
 
+You need a PHP environment compiled with support for GD (but this should already be in place). 
 Put these files in a directory inside your project. 
 Add...
 
@@ -25,7 +26,7 @@ Add...
 ## Configuration
 
     $your_spriter_configuration = array(
-        "forceGenerate" => false,                 // Set to true if you want to force the CSS and sprite generation
+        "forceGenerate" => false,                 // set to true if you want to force the CSS and sprite generation
         "cssDirectory" => "/path/to/css",         // where you want the sprite CSS to be saved. This folder has to be writable by your webserver
         "iconDirectory" => "/path/to/your/icons", // directory, which contains your single icon files
         "spriteDirectory" => "/path/to/img",      // where you want the sprite image file to be saved. Folder has to be writable, too.
@@ -34,8 +35,8 @@ Add...
         "retinaDelimiter" => "@",                 // the delimiter inside the sprite image filename
         "cssFileExtension" => "css",              // the CSS file extension
         "namespace" => "icon-",                   // the namespace for your icon CSS classes
-        "ignoreHover" => false,                   // Set to true if you don't need hover icons
-        "hoverSuffix" => "-hover",                // Set to any suffix you want.
+        "ignoreHover" => false,                   // set to true if you don't need hover icons
+        "hoverSuffix" => "-hover",                // set to any suffix you want.
         "globalTemplate" => "...",                // the global template, which contains general CSS styles for all icons (remove line for default)
         "eachTemplate" => "...",                  // the template for each CSS icon class (remove line for default)
         "eachHoverTemplate" => "...",             // the template for each CSS icon hover class (remove line for default)
