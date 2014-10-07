@@ -14,7 +14,7 @@ It can be included in any PHP project and works on the fly.
 
 ## Installation
 
-You need a PHP environment compiled with support for GD (but this should already be in place). 
+You need a PHP environment 5.3+ compiled with support for GD (but this should already be in place). 
 Put these files in a directory inside your project. 
 Add...
 
