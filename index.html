@@ -47,7 +47,8 @@ It can be included in any PHP project and works on the fly.</p>
 </ul><h2>
 <a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
 
-<p>Put these files in a directory inside your project. 
+<p>You need a PHP environment 5.3+ compiled with support for GD (but this should already be in place). 
+Put these files in a directory inside your project. 
 Add...</p>
 
 <pre><code>require_once 'path/to/spriter/spriter.inc.php';
@@ -60,7 +61,7 @@ new Spriter($your_spriter_configuration);
 <a name="configuration" class="anchor" href="#configuration"><span class="octicon octicon-link"></span></a>Configuration</h2>
 
 <pre><code>$your_spriter_configuration = array(
-    "forceGenerate" =&gt; false,                 // Set to true if you want to force the CSS and sprite generation
+    "forceGenerate" =&gt; false,                 // set to true if you want to force the CSS and sprite generation
     "cssDirectory" =&gt; "/path/to/css",         // where you want the sprite CSS to be saved. This folder has to be writable by your webserver
     "iconDirectory" =&gt; "/path/to/your/icons", // directory, which contains your single icon files
     "spriteDirectory" =&gt; "/path/to/img",      // where you want the sprite image file to be saved. Folder has to be writable, too.
@@ -69,8 +70,8 @@ new Spriter($your_spriter_configuration);
     "retinaDelimiter" =&gt; "@",                 // the delimiter inside the sprite image filename
     "cssFileExtension" =&gt; "css",              // the CSS file extension
     "namespace" =&gt; "icon-",                   // the namespace for your icon CSS classes
-    "ignoreHover" =&gt; false,                   // Set to true if you don't need hover icons
-    "hoverSuffix" =&gt; "-hover",                // Set to any suffix you want.
+    "ignoreHover" =&gt; false,                   // set to true if you don't need hover icons
+    "hoverSuffix" =&gt; "-hover",                // set to any suffix you want.
     "globalTemplate" =&gt; "...",                // the global template, which contains general CSS styles for all icons (remove line for default)
     "eachTemplate" =&gt; "...",                  // the template for each CSS icon class (remove line for default)
     "eachHoverTemplate" =&gt; "...",             // the template for each CSS icon hover class (remove line for default)
@@ -239,7 +240,7 @@ only screen and (min-device-pixel-ratio: {{ratio}}) {
           </script>
           <script type="text/javascript">
             try {
-              var pageTracker = _gat._getTracker("UA-712292-9");
+              var pageTracker = _gat._getTracker("UA-55502610-2");
             pageTracker._trackPageview();
             } catch(err) {}
           </script>
