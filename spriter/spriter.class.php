@@ -5,7 +5,7 @@
  * @author Christian Stuff <christian.stuff@namics.com>
  */
 class Spriter {
-	public static $version = "1.0.0";
+	public static $version = "1.0.1";
 
 	public $hasGenerated = false;
 
@@ -35,6 +35,7 @@ class Spriter {
 					$this->$key = $val;
 				}
 			}
+			$this->validate();
 			// validation & defaults
 			if ( !in_array( 1, $this->retina ) ) {
 				$this->retina[] = 1;
@@ -260,23 +261,18 @@ class Spriter {
 	private function generateCSS() {
 		$result = "";
 
+		$replacements = array(
+			"{{spriteDirectory}}" => $this->spriteDirectory,
+			"{{spriteFilename}}"  => $this->spriteFilename,
+			"{{sprite}}"          => $this->spriteDirectory . "/" . $this->spriteFilename . ".png",
+			"{{namespace}}"       => $this->namespace,
+			"{{width}}"           => $this->width . "px",
+			"{{height}}"          => $this->height . "px"
+		);
+
 		$result .= str_replace(
-			array(
-				"{{spriteDirectory}}",
-				"{{spriteFilename}}",
-				"{{sprite}}",
-				"{{namespace}}",
-				"{{width}}",
-				"{{height}}"
-			),
-			array(
-				$this->spriteDirectory,
-				$this->spriteFilename,
-				$this->spriteDirectory . "/" . $this->spriteFilename . ".png",
-				$this->namespace,
-				$this->width . "px",
-				$this->height . "px"
-			),
+			array_keys( $replacements ),
+			array_values( $replacements ),
 			$this->globalTemplate
 		);
 
@@ -291,29 +287,21 @@ class Spriter {
 			$ratios = "";
 			foreach ( $this->retina as $ratio ) {
 				if ( $ratio > 1 ) {
+					$replacements = array(
+						"{{spriteDirectory}}" => $this->spriteDirectory,
+						"{{spriteFilename}}"  => $this->spriteFilename,
+						"{{namespace}}"       => $this->namespace,
+						"{{ratio}}"           => $ratio,
+						"{{ratioFrag}}"       => $ratio . "/1",
+						"{{width}}"           => $this->width . "px",
+						"{{height}}"          => $this->height . "px",
+						"{{delimiter}}"       => $this->retinaDelimiter
+					);
 					$ratios = str_replace(
-						          array(
-							          "{{spriteDirectory}}",
-							          "{{spriteFilename}}",
-							          "{{namespace}}",
-							          "{{ratio}}",
-							          "{{ratioFrag}}",
-							          "{{width}}",
-							          "{{height}}",
-							          "{{delimiter}}"
-						          ),
-						          array(
-							          $this->spriteDirectory,
-							          $this->spriteFilename,
-							          $this->namespace,
-							          $ratio,
-							          $ratio . "/1",
-							          $this->width . "px",
-							          $this->height . "px",
-							          $this->retinaDelimiter
-						          ),
-						          $this->ratioTemplate
-					          ) . "\n" . $ratios;
+						array_keys( $replacements ),
+						array_values( $replacements ),
+						$this->ratioTemplate
+					) . "\n" . $ratios;
 				}
 			}
 			$result .= $ratios;
@@ -340,10 +328,26 @@ class Spriter {
 		return $this->spriteDirectory . "/" . $this->spriteFilename . ( $ratio > 1 ? $this->retinaDelimiter . $ratio . "x" : "" ) . ".png";
 	}
 
+	private function validate() {
+		if(!isset($this->cssDirectory)) {
+			$this->error(sprintf(self::MISSING_PROP, 'cssDirectory'));
+		}
+		if(!isset($this->iconDirectory)) {
+			$this->error(sprintf(self::MISSING_PROP, 'iconDirectory'));
+		}
+		if(!isset($this->spriteDirectory)) {
+			$this->error(sprintf(self::MISSING_PROP, 'spriteDirectory'));
+		}
+		if(!isset($this->spriteFilename)) {
+			$this->error(sprintf(self::MISSING_PROP, 'spriteFilename'));
+		}
+	}
+
 	private function error( $msg ) {
 		throw new Exception( $msg );
 	}
 
 	/** error messages **/
-	const INVALID_CONFIG = "Invalid Spriter initialization. Please check the documentation.";
+	const INVALID_CONFIG = "Spriter: invalid initialization. Please check the documentation.";
+	const MISSING_PROP = "Spriter: missing mandatory property \"%s\"";
 }
