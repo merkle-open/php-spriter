@@ -35,8 +35,8 @@ class Spriter {
 					$this->$key = $val;
 				}
 			}
-			$this->validate();
 			// validation & defaults
+			$this->validate();
 			if ( !in_array( 1, $this->retina ) ) {
 				$this->retina[] = 1;
 			}
@@ -60,7 +60,8 @@ class Spriter {
 				$this->generateChecksum();
 				$this->hasGenerated = true;
 			}
-		} else {
+		}
+		else {
 			$this->error( self::INVALID_CONFIG );
 		}
 	}
@@ -78,7 +79,8 @@ class Spriter {
 			if ( $lastChecksum !== $this->getChecksum() ) {
 				return true;
 			}
-		} else {
+		}
+		else {
 			return true;
 		}
 		// Check if the generated css file exists
@@ -161,7 +163,8 @@ class Spriter {
 				$icon->x = 0;
 				$icon->y = 0;
 				$canvas  = array( $icon->width, $icon->height );
-			} else {
+			}
+			else {
 				for ( $i = 0; $i < count( $free ); $i ++ ) {
 					if ( $free[ $i ]['width'] >= $icon->width && $free[ $i ]['height'] >= $icon->height ) {
 						// icon fits in free area
@@ -203,7 +206,8 @@ class Spriter {
 								'height' => $canvas[1] - $icon->height
 							) );
 						}
-					} else {
+					}
+					else {
 						// increase canvas height
 						$canvas  = array( $canvas[0], $canvas[1] + $icon->height );
 						$icon->x = 0;
@@ -297,11 +301,11 @@ class Spriter {
 						"{{height}}"          => $this->height . "px",
 						"{{delimiter}}"       => $this->retinaDelimiter
 					);
-					$ratios = str_replace(
-						array_keys( $replacements ),
-						array_values( $replacements ),
-						$this->ratioTemplate
-					) . "\n" . $ratios;
+					$ratios       = str_replace(
+						                array_keys( $replacements ),
+						                array_values( $replacements ),
+						                $this->ratioTemplate
+					                ) . "\n" . $ratios;
 				}
 			}
 			$result .= $ratios;
@@ -329,17 +333,17 @@ class Spriter {
 	}
 
 	private function validate() {
-		if(!isset($this->cssDirectory)) {
-			$this->error(sprintf(self::MISSING_PROP, 'cssDirectory'));
+		if ( !isset( $this->cssDirectory ) ) {
+			$this->error( sprintf( self::MISSING_PROP, 'cssDirectory' ) );
 		}
-		if(!isset($this->iconDirectory)) {
-			$this->error(sprintf(self::MISSING_PROP, 'iconDirectory'));
+		if ( !isset( $this->iconDirectory ) ) {
+			$this->error( sprintf( self::MISSING_PROP, 'iconDirectory' ) );
 		}
-		if(!isset($this->spriteDirectory)) {
-			$this->error(sprintf(self::MISSING_PROP, 'spriteDirectory'));
+		if ( !isset( $this->spriteDirectory ) ) {
+			$this->error( sprintf( self::MISSING_PROP, 'spriteDirectory' ) );
 		}
-		if(!isset($this->spriteFilename)) {
-			$this->error(sprintf(self::MISSING_PROP, 'spriteFilename'));
+		if ( !isset( $this->spriteFilename ) ) {
+			$this->error( sprintf( self::MISSING_PROP, 'spriteFilename' ) );
 		}
 	}
 
