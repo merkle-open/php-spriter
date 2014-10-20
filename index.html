@@ -44,7 +44,9 @@ It can be included in any PHP project and works on the fly.</p>
 <li><a href="#templates">Templates</a></li>
 <li><a href="#contributing">Contributing</a></li>
 <li><a href="#credits">Credits &amp; License</a></li>
-</ul><h2>
+</ul>
+
+<h2>
 <a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
 
 <p>You need a PHP environment 5.3+ compiled with support for GD (but this should already be in place). 
@@ -78,6 +80,11 @@ new Spriter($your_spriter_configuration);
     "ratioTemplate" =&gt; "..."                  // the template for each retina media query (remove line for default)
 );
 </code></pre>
+
+<h3>
+<a name="naming-rules" class="anchor" href="#naming-rules"><span class="octicon octicon-link"></span></a>Naming rules</h3>
+
+<p>You can specify the icons, that shall be generated for hover states with your configured <code>hoverSuffix</code> property. If <code>hoverSuffix</code> contains e.g. <code>"-hover"</code> then you should have two files with the same basename and one of them containing the suffix. <code>arrow-right.png</code> and <code>arrow-right-hover.png</code> would result in a <code>icon-arrow-right</code> CSS class, which will have the eachHoverTemplate applied.</p>
 
 <h2>
 <a name="generation-state" class="anchor" href="#generation-state"><span class="octicon octicon-link"></span></a>Generation state</h2>
@@ -136,7 +143,9 @@ Spriter comes with the following default template:</p>
 <li>{{spriteDirectory}} = configured sprite directory</li>
 <li>{{spriteFilename}} = configured sprite filename</li>
 <li>{{sprite}} = {{spriteDirectory}}/{{spriteFilename}}.png</li>
-</ul><h3>
+</ul>
+
+<h3>
 <a name="each-template" class="anchor" href="#each-template"><span class="octicon octicon-link"></span></a>Each Template</h3>
 
 <p>The each template represents the CSS declarations for a single named icon. 
@@ -153,7 +162,9 @@ The following default template comes with Spriter:</p>
 <li>{{y}} = the left position on the background sprite</li>
 <li>{{width}} = the width of the icon</li>
 <li>{{height}} = the height of the icon</li>
-</ul><h3>
+</ul>
+
+<h3>
 <a name="each-hover-template" class="anchor" href="#each-hover-template"><span class="octicon octicon-link"></span></a>Each Hover Template</h3>
 
 <p>The each template represents the CSS declarations for a single named icons hover state. 
@@ -170,7 +181,9 @@ The following default template comes with Spriter:</p>
 <li>{{y}} = the left position on the background sprite</li>
 <li>{{width}} = the width of the icon</li>
 <li>{{height}} = the height of the icon</li>
-</ul><h3>
+</ul>
+
+<h3>
 <a name="ratio-template" class="anchor" href="#ratio-template"><span class="octicon octicon-link"></span></a>Ratio Template</h3>
 
 <p>With the ratio template you can configure the CSS definitions for the retina media queries. 
@@ -199,14 +212,18 @@ only screen and (min-device-pixel-ratio: {{ratio}}) {
 <li>{{height}} = generated sprite height</li>
 <li>{{spriteDirectory}} = configured sprite directory</li>
 <li>{{spriteFilename}} = configured sprite filename</li>
-</ul><h2>
+</ul>
+
+<h2>
 <a name="contributing" class="anchor" href="#contributing"><span class="octicon octicon-link"></span></a>Contributing</h2>
 
 <ul>
 <li>For Bugs &amp; Features please use <a href="https://github.com/namics/php-spriter/issues">github</a>
 </li>
 <li>Feel free to fork and send PRs. That's the best way to discuss your ideas.</li>
-</ul><h2>
+</ul>
+
+<h2>
 <a name="credits" class="anchor" href="#credits"><span class="octicon octicon-link"></span></a>Credits</h2>
 
 <p>PHP Spriter was created by <a href="https://github.com/Regaddi">Christian Stuff</a></p>
