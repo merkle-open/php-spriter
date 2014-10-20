@@ -43,6 +43,10 @@ Add...
         "ratioTemplate" => "..."                  // the template for each retina media query (remove line for default)
     );
 
+### Naming rules
+
+You can specify the icons, that shall be generated for hover states with your configured `hoverSuffix` property. If `hoverSuffix` contains e.g. `"-hover"` then you should have two files with the same basename and one of them containing the suffix. `arrow-right.png` and `arrow-right-hover.png` would result in a `icon-arrow-right` CSS class, which will have the eachHoverTemplate applied.
+
 ## Generation state
 
 If you want to check, if Spriter has made a new generation you can do the following
