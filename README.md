@@ -26,21 +26,27 @@ Add...
 ## Configuration
 
     $your_spriter_configuration = array(
-        "forceGenerate" => false,                 // set to true if you want to force the CSS and sprite generation
-        "cssDirectory" => "/path/to/css",         // where you want the sprite CSS to be saved. This folder has to be writable by your webserver
-        "iconDirectory" => "/path/to/your/icons", // directory, which contains your single icon files
-        "spriteDirectory" => "/path/to/img",      // where you want the sprite image file to be saved. Folder has to be writable, too.
-        "spriteFilename" => "icon-sprite",        // the name of the generated CSS and PNG file
-        "retina" => array(2, 1),                  // defines the desired retina dimensions, you want
-        "retinaDelimiter" => "@",                 // the delimiter inside the sprite image filename
-        "cssFileExtension" => "css",              // the CSS file extension
-        "namespace" => "icon-",                   // the namespace for your icon CSS classes
+        "forceGenerate" => false,                 // set to true if you want to force the CSS and sprite generation.
+        
+        "iconDirectory" => "/path/to/src/images", // folder that contains the source pictures for the sprite.
+        "spriteDirectory" => "/path/to/sprite",   // folder where you want the sprite image file to be saved (folder has to be writable by your webserver)
+        "cssDirectory" => "/path/to/css",         // folder where you want the sprite CSS to be saved (folder has to be writable, too)
+        
+        "spriteFilepath" => "path/to/sprite",     // path to the sprite image for CSS rule.
+        "spriteFilename" => "icon-sprite",        // name of the generated CSS and PNG file.
+        
+        "retina" => array(2, 1),                  // defines the desired retina dimensions, you want.
+        "retinaDelimiter" => "@",                 // delimiter inside the sprite image filename.
+        "cssFileExtension" => "css",              // CSS file extension
+        "namespace" => "icon-",                   // namespace for your icon CSS classes
+        
         "ignoreHover" => false,                   // set to true if you don't need hover icons
         "hoverSuffix" => "-hover",                // set to any suffix you want.
-        "globalTemplate" => "...",                // the global template, which contains general CSS styles for all icons (remove line for default)
-        "eachTemplate" => "...",                  // the template for each CSS icon class (remove line for default)
-        "eachHoverTemplate" => "...",             // the template for each CSS icon hover class (remove line for default)
-        "ratioTemplate" => "..."                  // the template for each retina media query (remove line for default)
+        
+        "globalTemplate" => "...",                // global template, which contains general CSS styles for all icons (remove line for default)
+        "eachTemplate" => "...",                  // template for each CSS icon class (remove line for default)
+        "eachHoverTemplate" => "...",             // template for each CSS icon hover class (remove line for default)
+        "ratioTemplate" => "..."                  // template for each retina media query (remove line for default)
     );
 
 ### Naming rules
@@ -67,7 +73,7 @@ The global template represents the general CSS declarations for each icon.
 Spriter comes with the following default template:
 
     .icon, .icon-after:after, .icon-before:before {
-        background-image: url({{spriteDirectory}}/{{spriteFilename}}.png);
+        background-image: url({{spriteFilepath}}/{{spriteFilename}}.png);
         background-repeat: no-repeat;
         background-size: {{width}} {{height}};
         display: inline-block;
@@ -95,9 +101,9 @@ The following placeholders can be used inside the global template:
 * {{namespace}} = configured namespace
 * {{width}} = generated sprite width
 * {{height}} = generated sprite height
-* {{spriteDirectory}} = configured sprite directory
+* {{spriteFilepath}} = configured sprite directory
 * {{spriteFilename}} = configured sprite filename
-* {{sprite}} = {{spriteDirectory}}/{{spriteFilename}}.png
+* {{sprite}} = {{spriteFilepath}}/{{spriteFilename}}.png
 
 ### Each Template
 
@@ -138,7 +144,7 @@ This is the default template:
     only screen and (-o-min-device-pixel-ratio: {{ratioFrag}}),
     only screen and (min-device-pixel-ratio: {{ratio}}) {
         .icon, .icon-after:after, .icon-before:before {
-            background-image: url({{spriteDirectory}}/{{spriteFilename}}{{delimiter}}{{ratio}}x.png);
+            background-image: url({{spriteFilepath}}/{{spriteFilename}}{{delimiter}}{{ratio}}x.png);
             -webkit-background-size: {{width}} {{height}};
             -moz-background-size: {{width}} {{height}};
             background-size: {{width}} {{height}};
@@ -153,7 +159,7 @@ You can use the following placeholders:
 * {{namespace}} = configured namespace
 * {{width}} = generated sprite width
 * {{height}} = generated sprite height
-* {{spriteDirectory}} = configured sprite directory
+* {{spriteFilepath}} = configured sprite directory
 * {{spriteFilename}} = configured sprite filename
 
 ## Contributing

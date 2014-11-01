@@ -9,9 +9,10 @@ class Spriter {
 
 	public $hasGenerated = false;
 
-	protected $cssDirectory;
 	protected $iconDirectory;
 	protected $spriteDirectory;
+	protected $cssDirectory;
+	protected $spriteFilepath;
 	protected $spriteFilename;
 	protected $retina = array( 1 );
 	protected $retinaDelimiter = "@";
@@ -266,9 +267,10 @@ class Spriter {
 		$result = "";
 
 		$replacements = array(
-			"{{spriteDirectory}}" => $this->spriteDirectory,
+			"{{spriteDirectory}}" => $this->spriteFilepath, // deprecated
+			"{{spriteFilepath}}"  => $this->spriteFilepath,
 			"{{spriteFilename}}"  => $this->spriteFilename,
-			"{{sprite}}"          => $this->spriteDirectory . "/" . $this->spriteFilename . ".png",
+			"{{sprite}}"          => $this->spriteFilepath . "/" . $this->spriteFilename . ".png",
 			"{{namespace}}"       => $this->namespace,
 			"{{width}}"           => $this->width . "px",
 			"{{height}}"          => $this->height . "px"
@@ -292,7 +294,8 @@ class Spriter {
 			foreach ( $this->retina as $ratio ) {
 				if ( $ratio > 1 ) {
 					$replacements = array(
-						"{{spriteDirectory}}" => $this->spriteDirectory,
+						"{{spriteDirectory}}" => $this->spriteFilepath, // deprecated
+						"{{spriteFilepath}}"  => $this->spriteFilepath,
 						"{{spriteFilename}}"  => $this->spriteFilename,
 						"{{namespace}}"       => $this->namespace,
 						"{{ratio}}"           => $ratio,
@@ -341,6 +344,9 @@ class Spriter {
 		}
 		if ( !isset( $this->spriteDirectory ) ) {
 			$this->error( sprintf( self::MISSING_PROP, 'spriteDirectory' ) );
+		}
+		if ( !isset( $this->spriteFilepath ) ) {
+			$this->error( sprintf( self::MISSING_PROP, 'spriteFilepath' ) );
 		}
 		if ( !isset( $this->spriteFilename ) ) {
 			$this->error( sprintf( self::MISSING_PROP, 'spriteFilename' ) );
