@@ -8,3 +8,4 @@
 
 * configuration: add spriteFilepath config param for CSS rule
 * rename config param iconDirectory to srcDirectory
+* 0 instead of 0px in CSS rule

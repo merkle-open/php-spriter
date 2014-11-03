@@ -5,7 +5,7 @@
  * @author Christian Stuff <christian.stuff@namics.com>
  */
 class Spriter {
-	public static $version = "1.0.0";
+	public static $version = "1.1.0";
 
 	public $hasGenerated = false;
 
@@ -265,6 +265,10 @@ class Spriter {
 
 	private function generateCSS() {
 		$result = "";
+
+		echo($this->width . PHP_EOL);
+
+
 
 		$replacements = array(
 			"{{spriteDirectory}}" => $this->spriteFilepath, // deprecated

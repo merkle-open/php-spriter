@@ -72,8 +72,8 @@ class Icon {
 			"{{name}}"   => "." . $namespace . $this->name,
 			"{{width}}"  => $width . "px",
 			"{{height}}" => $height . "px",
-			"{{x}}"      => - $x . "px",
-			"{{y}}"      => - $y . "px"
+			"{{x}}"      => ( $x === 0 ) ? "0" : "-" . $x . "px",
+			"{{y}}"      => ( $y === 0 ) ? "0" : "-" . $y . "px"
 		);
 
 		return str_replace(
