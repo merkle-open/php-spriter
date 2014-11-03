@@ -266,10 +266,6 @@ class Spriter {
 	private function generateCSS() {
 		$result = "";
 
-		echo($this->width . PHP_EOL);
-
-
-
 		$replacements = array(
 			"{{spriteDirectory}}" => $this->spriteFilepath, // deprecated
 			"{{spriteFilepath}}"  => $this->spriteFilepath,
