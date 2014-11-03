@@ -63,21 +63,27 @@ new Spriter($your_spriter_configuration);
 <a name="configuration" class="anchor" href="#configuration"><span class="octicon octicon-link"></span></a>Configuration</h2>
 
 <pre><code>$your_spriter_configuration = array(
-    "forceGenerate" =&gt; false,                 // set to true if you want to force the CSS and sprite generation
-    "cssDirectory" =&gt; "/path/to/css",         // where you want the sprite CSS to be saved. This folder has to be writable by your webserver
-    "iconDirectory" =&gt; "/path/to/your/icons", // directory, which contains your single icon files
-    "spriteDirectory" =&gt; "/path/to/img",      // where you want the sprite image file to be saved. Folder has to be writable, too.
-    "spriteFilename" =&gt; "icon-sprite",        // the name of the generated CSS and PNG file
-    "retina" =&gt; array(2, 1),                  // defines the desired retina dimensions, you want
-    "retinaDelimiter" =&gt; "@",                 // the delimiter inside the sprite image filename
-    "cssFileExtension" =&gt; "css",              // the CSS file extension
-    "namespace" =&gt; "icon-",                   // the namespace for your icon CSS classes
+    "forceGenerate" =&gt; false,                 // set to true if you want to force the CSS and sprite generation.
+
+    "srcDirectory" =&gt; "/path/to/src/images", // folder that contains the source pictures for the sprite.
+    "spriteDirectory" =&gt; "/path/to/sprite",   // folder where you want the sprite image file to be saved (folder has to be writable by your webserver)
+    "cssDirectory" =&gt; "/path/to/css",         // folder where you want the sprite CSS to be saved (folder has to be writable, too)
+
+    "spriteFilepath" =&gt; "path/to/sprite",     // path to the sprite image for CSS rule.
+    "spriteFilename" =&gt; "icon-sprite",        // name of the generated CSS and PNG file.
+
+    "retina" =&gt; array(2, 1),                  // defines the desired retina dimensions, you want.
+    "retinaDelimiter" =&gt; "@",                 // delimiter inside the sprite image filename.
+    "cssFileExtension" =&gt; "css",              // CSS file extension
+    "namespace" =&gt; "icon-",                   // namespace for your icon CSS classes
+
     "ignoreHover" =&gt; false,                   // set to true if you don't need hover icons
     "hoverSuffix" =&gt; "-hover",                // set to any suffix you want.
-    "globalTemplate" =&gt; "...",                // the global template, which contains general CSS styles for all icons (remove line for default)
-    "eachTemplate" =&gt; "...",                  // the template for each CSS icon class (remove line for default)
-    "eachHoverTemplate" =&gt; "...",             // the template for each CSS icon hover class (remove line for default)
-    "ratioTemplate" =&gt; "..."                  // the template for each retina media query (remove line for default)
+
+    "globalTemplate" =&gt; "...",                // global template, which contains general CSS styles for all icons (remove line for default)
+    "eachTemplate" =&gt; "...",                  // template for each CSS icon class (remove line for default)
+    "eachHoverTemplate" =&gt; "...",             // template for each CSS icon hover class (remove line for default)
+    "ratioTemplate" =&gt; "..."                  // template for each retina media query (remove line for default)
 );
 </code></pre>
 
@@ -110,7 +116,7 @@ if($spriter-&gt;hasGenerated) {
 Spriter comes with the following default template:</p>
 
 <pre><code>.icon, .icon-after:after, .icon-before:before {
-    background-image: url({{spriteDirectory}}/{{spriteFilename}}.png);
+    background-image: url({{spriteFilepath}}/{{spriteFilename}}.png);
     background-repeat: no-repeat;
     background-size: {{width}} {{height}};
     display: inline-block;
@@ -140,9 +146,9 @@ Spriter comes with the following default template:</p>
 <li>{{namespace}} = configured namespace</li>
 <li>{{width}} = generated sprite width</li>
 <li>{{height}} = generated sprite height</li>
-<li>{{spriteDirectory}} = configured sprite directory</li>
+<li>{{spriteFilepath}} = configured sprite directory</li>
 <li>{{spriteFilename}} = configured sprite filename</li>
-<li>{{sprite}} = {{spriteDirectory}}/{{spriteFilename}}.png</li>
+<li>{{sprite}} = {{spriteFilepath}}/{{spriteFilename}}.png</li>
 </ul>
 
 <h3>
@@ -193,7 +199,7 @@ This is the default template:</p>
 only screen and (-o-min-device-pixel-ratio: {{ratioFrag}}),
 only screen and (min-device-pixel-ratio: {{ratio}}) {
     .icon, .icon-after:after, .icon-before:before {
-        background-image: url({{spriteDirectory}}/{{spriteFilename}}{{delimiter}}{{ratio}}x.png);
+        background-image: url({{spriteFilepath}}/{{spriteFilename}}{{delimiter}}{{ratio}}x.png);
         -webkit-background-size: {{width}} {{height}};
         -moz-background-size: {{width}} {{height}};
         background-size: {{width}} {{height}};
@@ -210,7 +216,7 @@ only screen and (min-device-pixel-ratio: {{ratio}}) {
 <li>{{namespace}} = configured namespace</li>
 <li>{{width}} = generated sprite width</li>
 <li>{{height}} = generated sprite height</li>
-<li>{{spriteDirectory}} = configured sprite directory</li>
+<li>{{spriteFilepath}} = configured sprite directory</li>
 <li>{{spriteFilename}} = configured sprite filename</li>
 </ul>
 
