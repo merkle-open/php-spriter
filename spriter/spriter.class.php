@@ -9,7 +9,7 @@ class Spriter {
 
 	public $hasGenerated = false;
 
-	protected $iconDirectory;
+	protected $srcDirectory;
 	protected $spriteDirectory;
 	protected $cssDirectory;
 	protected $spriteFilepath;
@@ -93,7 +93,7 @@ class Spriter {
 	}
 
 	private function setupIcons() {
-		if ( $handle = opendir( $this->iconDirectory ) ) {
+		if ( $handle = opendir( $this->srcDirectory ) ) {
 			while ( false !== ( $file = readdir( $handle ) ) ) {
 				if ( $file != "." && $file != ".." && in_array( pathinfo( $file, PATHINFO_EXTENSION ), array(
 						"gif",
@@ -102,7 +102,7 @@ class Spriter {
 						"png"
 					) )
 				) {
-					$fullPath   = $this->iconDirectory . "/" . $file;
+					$fullPath   = $this->srcDirectory . "/" . $file;
 					$size       = getimagesize( $fullPath );
 					$path_parts = pathinfo( $fullPath );
 					array_push( $this->icons, new Icon(
@@ -234,18 +234,18 @@ class Spriter {
 					$retina_height = $canvas[1] * $ratio / $maxRatio;
 					$retina        = self::createTransparentImage( $retina_width, $retina_height );
 					foreach ( $this->icons as $i ) {
-						$path_parts = pathinfo( $this->iconDirectory . "/" . $i->file );
+						$path_parts = pathinfo( $this->srcDirectory . "/" . $i->file );
 						$icon_img   = null;
 						switch ( $path_parts['extension'] ) {
 							case "png":
-								$icon_img = imagecreatefrompng( $this->iconDirectory . "/" . $i->file );
+								$icon_img = imagecreatefrompng( $this->srcDirectory . "/" . $i->file );
 								break;
 							case "jpg":
 							case "jpeg":
-								$icon_img = imagecreatefromjpeg( $this->iconDirectory . "/" . $i->file );
+								$icon_img = imagecreatefromjpeg( $this->srcDirectory . "/" . $i->file );
 								break;
 							case "gif":
-								$icon_img = imagecreatefromgif( $this->iconDirectory . "/" . $i->file );
+								$icon_img = imagecreatefromgif( $this->srcDirectory . "/" . $i->file );
 								break;
 						}
 						if ( is_null( $icon_img ) ) {
@@ -321,7 +321,7 @@ class Spriter {
 		$content = "";
 
 		foreach ( $this->icons as $icon ) {
-			$content .= $icon->file . file_get_contents( $this->iconDirectory . "/" . $icon->file );
+			$content .= $icon->file . file_get_contents( $this->srcDirectory . "/" . $icon->file );
 		}
 
 		return sha1( $content );
@@ -339,8 +339,8 @@ class Spriter {
 		if ( !isset( $this->cssDirectory ) ) {
 			$this->error( sprintf( self::MISSING_PROP, 'cssDirectory' ) );
 		}
-		if ( !isset( $this->iconDirectory ) ) {
-			$this->error( sprintf( self::MISSING_PROP, 'iconDirectory' ) );
+		if ( !isset( $this->srcDirectory ) ) {
+			$this->error( sprintf( self::MISSING_PROP, 'srcDirectory' ) );
 		}
 		if ( !isset( $this->spriteDirectory ) ) {
 			$this->error( sprintf( self::MISSING_PROP, 'spriteDirectory' ) );

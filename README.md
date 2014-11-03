@@ -28,7 +28,7 @@ Add...
     $your_spriter_configuration = array(
         "forceGenerate" => false,                 // set to true if you want to force the CSS and sprite generation.
         
-        "iconDirectory" => "/path/to/src/images", // folder that contains the source pictures for the sprite.
+        "srcDirectory" => "/path/to/src/images", // folder that contains the source pictures for the sprite.
         "spriteDirectory" => "/path/to/sprite",   // folder where you want the sprite image file to be saved (folder has to be writable by your webserver)
         "cssDirectory" => "/path/to/css",         // folder where you want the sprite CSS to be saved (folder has to be writable, too)
         
