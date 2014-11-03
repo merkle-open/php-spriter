@@ -2,7 +2,7 @@
 
 ## v1.0.0 - 2014-10-20  - first version
 
-## v1.1.0 - 2014-11-
+## v1.1.0 - 2014-11-03
 
 ### Maintenance / Fixes
 
