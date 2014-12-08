@@ -69,7 +69,7 @@ class Icon {
 		}
 
 		$replacements = array(
-			"{{name}}"   => "." . $namespace . $this->name,
+			"{{name}}"   => $namespace . $this->name,
 			"{{width}}"  => $width . "px",
 			"{{height}}" => $height . "px",
 			"{{x}}"      => ( $x === 0 ) ? "0" : "-" . $x . "px",

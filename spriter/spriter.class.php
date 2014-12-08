@@ -5,7 +5,7 @@
  * @author Christian Stuff <christian.stuff@namics.com>
  */
 class Spriter {
-	public static $version = "1.1.0";
+	public static $version = "1.1.1";
 
 	public $hasGenerated = false;
 

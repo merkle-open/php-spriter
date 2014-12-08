@@ -1,6 +1,6 @@
 # PHP Spriter - The icon sprite generator
 
-PHP Spriter is an easy to use and flexible icon sprite generator. 
+PHP Spriter is an easy to use and flexible icon sprite generator.
 It can be included in any PHP project and works on the fly.
 
 ## Table of contents
@@ -14,8 +14,8 @@ It can be included in any PHP project and works on the fly.
 
 ## Installation
 
-You need a PHP environment 5.3+ compiled with support for GD (but this should already be in place). 
-Put these files in a directory inside your project. 
+You need a PHP environment 5.3+ compiled with support for GD (but this should already be in place).
+Put these files in a directory inside your project.
 Add...
 
     require_once 'path/to/spriter/spriter.inc.php';
@@ -27,22 +27,22 @@ Add...
 
     $your_spriter_configuration = array(
         "forceGenerate" => false,                 // set to true if you want to force the CSS and sprite generation.
-        
+
         "srcDirectory" => "/path/to/src/images", // folder that contains the source pictures for the sprite.
         "spriteDirectory" => "/path/to/sprite",   // folder where you want the sprite image file to be saved (folder has to be writable by your webserver)
         "cssDirectory" => "/path/to/css",         // folder where you want the sprite CSS to be saved (folder has to be writable, too)
-        
+
         "spriteFilepath" => "path/to/sprite",     // path to the sprite image for CSS rule.
         "spriteFilename" => "icon-sprite",        // name of the generated CSS and PNG file.
-        
+
         "retina" => array(2, 1),                  // defines the desired retina dimensions, you want.
         "retinaDelimiter" => "@",                 // delimiter inside the sprite image filename.
         "cssFileExtension" => "css",              // CSS file extension
         "namespace" => "icon-",                   // namespace for your icon CSS classes
-        
+
         "ignoreHover" => false,                   // set to true if you don't need hover icons
         "hoverSuffix" => "-hover",                // set to any suffix you want.
-        
+
         "globalTemplate" => "...",                // global template, which contains general CSS styles for all icons (remove line for default)
         "eachTemplate" => "...",                  // template for each CSS icon class (remove line for default)
         "eachHoverTemplate" => "...",             // template for each CSS icon hover class (remove line for default)
@@ -69,7 +69,7 @@ You can simply edit the existing template files (placed at spriter/templates) to
 
 ### Global template
 
-The global template represents the general CSS declarations for each icon. 
+The global template represents the general CSS declarations for each icon.
 Spriter comes with the following default template:
 
     .icon, .icon-after:after, .icon-before:before {
@@ -107,10 +107,10 @@ The following placeholders can be used inside the global template:
 
 ### Each Template
 
-The each template represents the CSS declarations for a single named icon. 
+The each template represents the CSS declarations for a single named icon.
 The following default template comes with Spriter:
 
-    {{name}}, {{name}}-after:after, {{name}}-before:before { background-position: {{x}} {{y}}; width: {{width}}; height: {{height}}; }
+    .{{name}}, .{{name}}-after:after, .{{name}}-before:before { background-position: {{x}} {{y}}; width: {{width}}; height: {{height}}; }
 
 You can use the following placeholders:
 
@@ -122,10 +122,10 @@ You can use the following placeholders:
 
 ### Each Hover Template
 
-The each template represents the CSS declarations for a single named icons hover state. 
+The each template represents the CSS declarations for a single named icons hover state.
 The following default template comes with Spriter:
 
-    {{name}}:hover, {{name}}-after:hover:after, {{name}}-before:hover:before { background-position: {{x}} {{y}}; width: {{width}}; height: {{height}}; }
+    .{{name}}:hover, .{{name}}-after:hover:after, .{{name}}-before:hover:before { background-position: {{x}} {{y}}; width: {{width}}; height: {{height}}; }
 
 You can use the following placeholders:
 
@@ -137,7 +137,7 @@ You can use the following placeholders:
 
 ### Ratio Template
 
-With the ratio template you can configure the CSS definitions for the retina media queries. 
+With the ratio template you can configure the CSS definitions for the retina media queries.
 This is the default template:
 
     @media only screen and (-webkit-min-device-pixel-ratio: {{ratio}}),
