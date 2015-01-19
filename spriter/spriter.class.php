@@ -124,20 +124,20 @@ class Spriter {
 		if ( $handle = opendir( $this->srcDirectory ) ) {
 			while ( false !== ( $file = readdir( $handle ) ) ) {
 				if ( $file != "." && $file != ".." && in_array( pathinfo( $file, PATHINFO_EXTENSION ), array(
-				"gif",
-				"jpg",
-				"jpeg",
-				"png"
+					"gif",
+					"jpg",
+					"jpeg",
+					"png"
 				) )
 				) {
 					$fullPath   = $this->srcDirectory . "/" . $file;
 					$size       = getimagesize( $fullPath );
 					$path_parts = pathinfo( $fullPath );
 					array_push( $this->icons, new Icon(
-					$file,
-					$path_parts['filename'],
-					$size[0],
-					$size[1]
+						$file,
+						$path_parts['filename'],
+						$size[0],
+						$size[1]
 					) );
 				}
 			}
@@ -202,10 +202,10 @@ class Spriter {
 
 						if ( $icon->height < $free[ $i ]['height'] ) {
 							array_push( $free, array(
-							'x'      => $free[ $i ]['x'],
-							'y'      => $free[ $i ]['y'] + $icon->height,
-							'width'  => $icon->width,
-							'height' => $free[ $i ]['height'] - $icon->height
+								'x'      => $free[ $i ]['x'],
+								'y'      => $free[ $i ]['y'] + $icon->height,
+								'width'  => $icon->width,
+								'height' => $free[ $i ]['height'] - $icon->height
 							) );
 						}
 						$free[ $i ]['x']     = $free[ $i ]['x'] + $icon->width;
@@ -229,10 +229,10 @@ class Spriter {
 
 						if ( $canvas[1] > $icon->height ) {
 							array_push( $free, array(
-							'x'      => $canvas[0] - $icon->width,
-							'y'      => $icon->height,
-							'width'  => $icon->width,
-							'height' => $canvas[1] - $icon->height
+								'x'      => $canvas[0] - $icon->width,
+								'y'      => $icon->height,
+								'width'  => $icon->width,
+								'height' => $canvas[1] - $icon->height
 							) );
 						}
 					}
@@ -244,10 +244,10 @@ class Spriter {
 
 						if ( $canvas[0] > $icon->width ) {
 							array_push( $free, array(
-							'x'      => $icon->width,
-							'y'      => $canvas[1] - $icon->height,
-							'width'  => $canvas[0] - $icon->width,
-							'height' => $icon->height
+								'x'      => $icon->width,
+								'y'      => $canvas[1] - $icon->height,
+								'width'  => $canvas[0] - $icon->width,
+								'height' => $icon->height
 							) );
 						}
 					}
@@ -266,15 +266,15 @@ class Spriter {
 						$icon_img   = null;
 						switch ( $path_parts['extension'] ) {
 							case "png":
-							$icon_img = imagecreatefrompng( $this->srcDirectory . "/" . $i->file );
-							break;
+								$icon_img = imagecreatefrompng( $this->srcDirectory . "/" . $i->file );
+								break;
 							case "jpg":
 							case "jpeg":
-							$icon_img = imagecreatefromjpeg( $this->srcDirectory . "/" . $i->file );
-							break;
+								$icon_img = imagecreatefromjpeg( $this->srcDirectory . "/" . $i->file );
+								break;
 							case "gif":
-							$icon_img = imagecreatefromgif( $this->srcDirectory . "/" . $i->file );
-							break;
+								$icon_img = imagecreatefromgif( $this->srcDirectory . "/" . $i->file );
+								break;
 						}
 						if ( is_null( $icon_img ) ) {
 							continue;
@@ -295,12 +295,12 @@ class Spriter {
 
 		if ( empty( $this->targets ) ) {
 			array_push( $this->targets, array(
-			"cssDirectory" => $this->cssDirectory,
-			"cssFilename" => $this->spriteFilename . "." . $this->cssFileExtension,
-			"globalTemplate" => $this->globalTemplate,
-			"eachTemplate" => $this->eachTemplate,
-			"eachHoverTemplate" => $this->eachHoverTemplate,
-			"ratioTemplate" => $this->ratioTemplate
+				"cssDirectory" => $this->cssDirectory,
+				"cssFilename" => $this->spriteFilename . "." . $this->cssFileExtension,
+				"globalTemplate" => $this->globalTemplate,
+				"eachTemplate" => $this->eachTemplate,
+				"eachHoverTemplate" => $this->eachHoverTemplate,
+				"ratioTemplate" => $this->ratioTemplate
 			));
 		}
 
@@ -310,19 +310,19 @@ class Spriter {
 			$result = "";
 
 			$replacements = array(
-			"{{spriteDirectory}}" => $this->spriteFilepath, // deprecated
-			"{{spriteFilepath}}"  => $this->spriteFilepath,
-			"{{spriteFilename}}"  => $this->spriteFilename,
-			"{{sprite}}"          => $this->spriteFilepath . "/" . $this->spriteFilename . ".png",
-			"{{namespace}}"       => $this->namespace,
-			"{{width}}"           => $this->width . "px",
-			"{{height}}"          => $this->height . "px"
+				"{{spriteDirectory}}" => $this->spriteFilepath, // deprecated
+				"{{spriteFilepath}}"  => $this->spriteFilepath,
+				"{{spriteFilename}}"  => $this->spriteFilename,
+				"{{sprite}}"          => $this->spriteFilepath . "/" . $this->spriteFilename . ".png",
+				"{{namespace}}"       => $this->namespace,
+				"{{width}}"           => $this->width . "px",
+				"{{height}}"          => $this->height . "px"
 			);
 
 			$result .= str_replace(
-			array_keys( $replacements ),
-			array_values( $replacements ),
-			$target['globalTemplate']
+				array_keys( $replacements ),
+				array_values( $replacements ),
+				$target['globalTemplate']
 			);
 
 			foreach ( $this->icons as $icon ) {
@@ -337,20 +337,20 @@ class Spriter {
 				foreach ( $this->retina as $ratio ) {
 					if ( $ratio > 1 ) {
 						$replacements = array(
-						"{{spriteDirectory}}" => $this->spriteFilepath, // deprecated
-						"{{spriteFilepath}}"  => $this->spriteFilepath,
-						"{{spriteFilename}}"  => $this->spriteFilename,
-						"{{namespace}}"       => $this->namespace,
-						"{{ratio}}"           => $ratio,
-						"{{ratioFrag}}"       => $ratio . "/1",
-						"{{width}}"           => $this->width . "px",
-						"{{height}}"          => $this->height . "px",
-						"{{delimiter}}"       => $this->retinaDelimiter
+							"{{spriteDirectory}}" => $this->spriteFilepath, // deprecated
+							"{{spriteFilepath}}"  => $this->spriteFilepath,
+							"{{spriteFilename}}"  => $this->spriteFilename,
+							"{{namespace}}"       => $this->namespace,
+							"{{ratio}}"           => $ratio,
+							"{{ratioFrag}}"       => $ratio . "/1",
+							"{{width}}"           => $this->width . "px",
+							"{{height}}"          => $this->height . "px",
+							"{{delimiter}}"       => $this->retinaDelimiter
 						);
 						$ratios       = str_replace(
-						array_keys( $replacements ),
-						array_values( $replacements ),
-						$target['ratioTemplate']
+							array_keys( $replacements ),
+							array_values( $replacements ),
+							$target['ratioTemplate']
 						) . "\n" . $ratios;
 					}
 				}
