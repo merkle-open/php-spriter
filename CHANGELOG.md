@@ -16,3 +16,11 @@
 
 * {{name}} placeholder won't create class point anymore.
 * default each templates changed and now include class point.
+
+## v1.2.0 - 2015-01-19
+
+### Maintenance
+
+* configuration: add `targets` config param for generation of different CSS/Less/Sass files referencing the same png sprite file
+* new config param `cssFilename` inside `targets`
+* `cssFileExtension` is now deprecated

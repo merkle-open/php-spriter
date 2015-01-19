@@ -1,11 +1,11 @@
 <?php
 
 /**
- * @class Spriter
- * @author Christian Stuff <christian.stuff@namics.com>
- */
+* @class Spriter
+* @author Christian Stuff <christian.stuff@namics.com>
+*/
 class Spriter {
-	public static $version = "1.1.1";
+	public static $version = "1.2.0";
 
 	public $hasGenerated = false;
 
@@ -16,7 +16,7 @@ class Spriter {
 	protected $spriteFilename;
 	protected $retina = array( 1 );
 	protected $retinaDelimiter = "@";
-	protected $cssFileExtension = "css";
+	protected $cssFileExtension = "css"; // deprecated
 	protected $namespace = "icon-";
 	protected $globalTemplate;
 	protected $eachTemplate;
@@ -25,6 +25,8 @@ class Spriter {
 	protected $forceGenerate = false;
 	protected $ignoreHover = false;
 	protected $hoverSuffix = "-hover";
+
+	protected $targets = array();
 
 	private $icons = array();
 
@@ -41,18 +43,7 @@ class Spriter {
 			if ( !in_array( 1, $this->retina ) ) {
 				$this->retina[] = 1;
 			}
-			if ( empty( $this->globalTemplate ) ) {
-				$this->globalTemplate = file_get_contents( __DIR__ . "/templates/default-global.tpl" );
-			}
-			if ( empty( $this->eachTemplate ) ) {
-				$this->eachTemplate = file_get_contents( __DIR__ . "/templates/default-each.tpl" );
-			}
-			if ( empty( $this->eachHoverTemplate ) ) {
-				$this->eachHoverTemplate = file_get_contents( __DIR__ . "/templates/default-each-hover.tpl" );
-			}
-			if ( empty( $this->ratioTemplate ) && count( $this->retina ) > 1 ) {
-				$this->ratioTemplate = file_get_contents( __DIR__ . "/templates/default-ratio.tpl" );
-			}
+			$this->checkDefaultTemplates();
 			// setup & generation
 			$this->setupIcons();
 			if ( $this->hasChanged() || $this->forceGenerate ) {
@@ -64,6 +55,43 @@ class Spriter {
 		}
 		else {
 			$this->error( self::INVALID_CONFIG );
+		}
+	}
+
+	private function checkDefaultTemplates() {
+		$defaultGlobal    = file_get_contents( __DIR__ . "/templates/default-global.tpl" );
+		$defaultEach      = file_get_contents( __DIR__ . "/templates/default-each.tpl" );
+		$defaultEachHover = file_get_contents( __DIR__ . "/templates/default-each-hover.tpl" );
+		$defaultRatio     = file_get_contents( __DIR__ . "/templates/default-ratio.tpl" );
+
+		if ( empty( $this->targets ) ) {
+			if ( empty( $this->globalTemplate ) ) {
+				$this->globalTemplate = $defaultGlobal;
+			}
+			if ( empty( $this->eachTemplate ) ) {
+				$this->eachTemplate = $defaultEach;
+			}
+			if ( empty( $this->eachHoverTemplate ) ) {
+				$this->eachHoverTemplate = $defaultEachHover;
+			}
+			if ( empty( $this->ratioTemplate ) && count( $this->retina ) > 1 ) {
+				$this->ratioTemplate = $defaultRatio;
+			}
+		} else {
+			for ( $i = 0; $i < count( $this->targets ); $i++ ) {
+				if ( empty( $this->targets[$i]['globalTemplate'] ) ) {
+					$this->targets[$i]['globalTemplate'] = $defaultGlobal;
+				}
+				if ( empty( $this->targets[$i]['eachTemplate'] ) ) {
+					$this->targets[$i]['eachTemplate'] = $eachTemplate;
+				}
+				if ( empty( $this->targets[$i]['eachHoverTemplate'] ) ) {
+					$this->targets[$i]['eachHoverTemplate'] = $eachHoverTemplate;
+				}
+				if ( empty( $this->targets[$i]['ratioTemplate'] ) && count( $this->retina ) > 1 ) {
+					$this->targets[$i]['ratioTemplate'] = $ratioTemplate;
+				}
+			}
 		}
 	}
 
@@ -96,20 +124,20 @@ class Spriter {
 		if ( $handle = opendir( $this->srcDirectory ) ) {
 			while ( false !== ( $file = readdir( $handle ) ) ) {
 				if ( $file != "." && $file != ".." && in_array( pathinfo( $file, PATHINFO_EXTENSION ), array(
-						"gif",
-						"jpg",
-						"jpeg",
-						"png"
-					) )
+				"gif",
+				"jpg",
+				"jpeg",
+				"png"
+				) )
 				) {
 					$fullPath   = $this->srcDirectory . "/" . $file;
 					$size       = getimagesize( $fullPath );
 					$path_parts = pathinfo( $fullPath );
 					array_push( $this->icons, new Icon(
-						$file,
-						$path_parts['filename'],
-						$size[0],
-						$size[1]
+					$file,
+					$path_parts['filename'],
+					$size[0],
+					$size[1]
 					) );
 				}
 			}
@@ -174,10 +202,10 @@ class Spriter {
 
 						if ( $icon->height < $free[ $i ]['height'] ) {
 							array_push( $free, array(
-								'x'      => $free[ $i ]['x'],
-								'y'      => $free[ $i ]['y'] + $icon->height,
-								'width'  => $icon->width,
-								'height' => $free[ $i ]['height'] - $icon->height
+							'x'      => $free[ $i ]['x'],
+							'y'      => $free[ $i ]['y'] + $icon->height,
+							'width'  => $icon->width,
+							'height' => $free[ $i ]['height'] - $icon->height
 							) );
 						}
 						$free[ $i ]['x']     = $free[ $i ]['x'] + $icon->width;
@@ -201,10 +229,10 @@ class Spriter {
 
 						if ( $canvas[1] > $icon->height ) {
 							array_push( $free, array(
-								'x'      => $canvas[0] - $icon->width,
-								'y'      => $icon->height,
-								'width'  => $icon->width,
-								'height' => $canvas[1] - $icon->height
+							'x'      => $canvas[0] - $icon->width,
+							'y'      => $icon->height,
+							'width'  => $icon->width,
+							'height' => $canvas[1] - $icon->height
 							) );
 						}
 					}
@@ -216,10 +244,10 @@ class Spriter {
 
 						if ( $canvas[0] > $icon->width ) {
 							array_push( $free, array(
-								'x'      => $icon->width,
-								'y'      => $canvas[1] - $icon->height,
-								'width'  => $canvas[0] - $icon->width,
-								'height' => $icon->height
+							'x'      => $icon->width,
+							'y'      => $canvas[1] - $icon->height,
+							'width'  => $canvas[0] - $icon->width,
+							'height' => $icon->height
 							) );
 						}
 					}
@@ -238,15 +266,15 @@ class Spriter {
 						$icon_img   = null;
 						switch ( $path_parts['extension'] ) {
 							case "png":
-								$icon_img = imagecreatefrompng( $this->srcDirectory . "/" . $i->file );
-								break;
+							$icon_img = imagecreatefrompng( $this->srcDirectory . "/" . $i->file );
+							break;
 							case "jpg":
 							case "jpeg":
-								$icon_img = imagecreatefromjpeg( $this->srcDirectory . "/" . $i->file );
-								break;
+							$icon_img = imagecreatefromjpeg( $this->srcDirectory . "/" . $i->file );
+							break;
 							case "gif":
-								$icon_img = imagecreatefromgif( $this->srcDirectory . "/" . $i->file );
-								break;
+							$icon_img = imagecreatefromgif( $this->srcDirectory . "/" . $i->file );
+							break;
 						}
 						if ( is_null( $icon_img ) ) {
 							continue;
@@ -264,9 +292,24 @@ class Spriter {
 	}
 
 	private function generateCSS() {
-		$result = "";
 
-		$replacements = array(
+		if ( empty( $this->targets ) ) {
+			array_push( $this->targets, array(
+			"cssDirectory" => $this->cssDirectory,
+			"cssFilename" => $this->spriteFilename . "." . $this->cssFileExtension,
+			"globalTemplate" => $this->globalTemplate,
+			"eachTemplate" => $this->eachTemplate,
+			"eachHoverTemplate" => $this->eachHoverTemplate,
+			"ratioTemplate" => $this->ratioTemplate
+			));
+		}
+
+		for ( $i = 0; $i < count($this->targets); $i++ ) {
+			$target = $this->targets[$i];
+
+			$result = "";
+
+			$replacements = array(
 			"{{spriteDirectory}}" => $this->spriteFilepath, // deprecated
 			"{{spriteFilepath}}"  => $this->spriteFilepath,
 			"{{spriteFilename}}"  => $this->spriteFilename,
@@ -274,26 +317,26 @@ class Spriter {
 			"{{namespace}}"       => $this->namespace,
 			"{{width}}"           => $this->width . "px",
 			"{{height}}"          => $this->height . "px"
-		);
+			);
 
-		$result .= str_replace(
+			$result .= str_replace(
 			array_keys( $replacements ),
 			array_values( $replacements ),
-			$this->globalTemplate
-		);
+			$target['globalTemplate']
+			);
 
-		foreach ( $this->icons as $icon ) {
-			$result .= $icon->generateCSSRule( $this->namespace, $this->eachTemplate, $this->retina );
-			if ( !$this->ignoreHover && $icon->hasHover ) {
-				$result .= $icon->generateHoverCSSRule( $this->namespace, $this->eachHoverTemplate, $this->retina );
+			foreach ( $this->icons as $icon ) {
+				$result .= $icon->generateCSSRule( $this->namespace, $target['eachTemplate'], $this->retina );
+				if ( !$this->ignoreHover && $icon->hasHover ) {
+					$result .= $icon->generateHoverCSSRule( $this->namespace, $target['eachHoverTemplate'], $this->retina );
+				}
 			}
-		}
 
-		if ( isset( $this->ratioTemplate ) && !empty( $this->ratioTemplate ) && is_array( $this->retina ) && count( $this->retina ) > 1 ) {
-			$ratios = "";
-			foreach ( $this->retina as $ratio ) {
-				if ( $ratio > 1 ) {
-					$replacements = array(
+			if ( isset( $target['ratioTemplate'] ) && !empty( $target['ratioTemplate'] ) && is_array( $this->retina ) && count( $this->retina ) > 1 ) {
+				$ratios = "";
+				foreach ( $this->retina as $ratio ) {
+					if ( $ratio > 1 ) {
+						$replacements = array(
 						"{{spriteDirectory}}" => $this->spriteFilepath, // deprecated
 						"{{spriteFilepath}}"  => $this->spriteFilepath,
 						"{{spriteFilename}}"  => $this->spriteFilename,
@@ -303,18 +346,19 @@ class Spriter {
 						"{{width}}"           => $this->width . "px",
 						"{{height}}"          => $this->height . "px",
 						"{{delimiter}}"       => $this->retinaDelimiter
-					);
-					$ratios       = str_replace(
-						                array_keys( $replacements ),
-						                array_values( $replacements ),
-						                $this->ratioTemplate
-					                ) . "\n" . $ratios;
+						);
+						$ratios       = str_replace(
+						array_keys( $replacements ),
+						array_values( $replacements ),
+						$target['ratioTemplate']
+						) . "\n" . $ratios;
+					}
 				}
+				$result .= $ratios;
 			}
-			$result .= $ratios;
-		}
 
-		file_put_contents( $this->cssDirectory . "/" . $this->spriteFilename . "." . $this->cssFileExtension, $result );
+			file_put_contents( $target['cssDirectory'] . "/" . $target['cssFilename'], $result );
+		}
 	}
 
 	private function getChecksum() {
@@ -336,9 +380,6 @@ class Spriter {
 	}
 
 	private function validate() {
-		if ( !isset( $this->cssDirectory ) ) {
-			$this->error( sprintf( self::MISSING_PROP, 'cssDirectory' ) );
-		}
 		if ( !isset( $this->srcDirectory ) ) {
 			$this->error( sprintf( self::MISSING_PROP, 'srcDirectory' ) );
 		}
