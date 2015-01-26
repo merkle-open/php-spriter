@@ -83,13 +83,13 @@ class Spriter {
 					$this->targets[$i]['globalTemplate'] = $defaultGlobal;
 				}
 				if ( empty( $this->targets[$i]['eachTemplate'] ) ) {
-					$this->targets[$i]['eachTemplate'] = $eachTemplate;
+					$this->targets[$i]['eachTemplate'] = $defaultEach;
 				}
 				if ( empty( $this->targets[$i]['eachHoverTemplate'] ) ) {
-					$this->targets[$i]['eachHoverTemplate'] = $eachHoverTemplate;
+					$this->targets[$i]['eachHoverTemplate'] = $defaultEachHover;
 				}
 				if ( empty( $this->targets[$i]['ratioTemplate'] ) && count( $this->retina ) > 1 ) {
-					$this->targets[$i]['ratioTemplate'] = $ratioTemplate;
+					$this->targets[$i]['ratioTemplate'] = $defaultRatio;
 				}
 			}
 		}
