@@ -5,7 +5,7 @@
 * @author Christian Stuff <christian.stuff@namics.com>
 */
 class Spriter {
-	public static $version = "1.2.0";
+	public static $version = "1.2.1";
 
 	public $hasGenerated = false;
 
@@ -102,8 +102,8 @@ class Spriter {
 				return true;
 			}
 		}
-		if ( file_exists( __DIR__ . "/.checksum" ) ) {
-			$lastChecksum = file_get_contents( __DIR__ . "/.checksum" );
+		if ( file_exists( __DIR__ . "/" . $this->getChecksumName() ) ) {
+			$lastChecksum = file_get_contents( __DIR__ . "/" . $this->getChecksumName() );
 
 			if ( $lastChecksum !== $this->getChecksum() ) {
 				return true;
@@ -113,8 +113,10 @@ class Spriter {
 			return true;
 		}
 		// Check if the generated css file exists
-		if ( !file_exists( $this->cssDirectory . "/" . $this->spriteFilename . "." . $this->cssFileExtension ) ) {
-			return true;
+		foreach( $this->targets as $target ) {
+			if ( !file_exists( $target['cssDirectory'] . "/" . $target['cssFilename'] ) ) {
+				return true;
+			}
 		}
 
 		return false;
@@ -372,7 +374,11 @@ class Spriter {
 	}
 
 	private function generateChecksum() {
-		file_put_contents( __DIR__ . "/.checksum", $this->getChecksum() );
+		file_put_contents( __DIR__ . "/" . $this->getChecksumName(), $this->getChecksum() );
+	}
+
+	private function getChecksumName() {
+		return ".checksum-" . $this->spriteFilename;
 	}
 
 	private function getSpriteFilename( $ratio = 1 ) {

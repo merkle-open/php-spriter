@@ -24,3 +24,9 @@
 * configuration: add `targets` config param for generation of different CSS/Less/Sass files referencing the same png sprite file
 * new config param `cssFilename` inside `targets`
 * `cssFileExtension` is now deprecated
+
+## v1.2.1 - 2015-01-29
+
+### Fixes
+
+* checksum file per target
