@@ -67,23 +67,29 @@ new Spriter($your_spriter_configuration);
 
     "srcDirectory" =&gt; "/path/to/src/images", // folder that contains the source pictures for the sprite.
     "spriteDirectory" =&gt; "/path/to/sprite",   // folder where you want the sprite image file to be saved (folder has to be writable by your webserver)
-    "cssDirectory" =&gt; "/path/to/css",         // folder where you want the sprite CSS to be saved (folder has to be writable, too)
 
     "spriteFilepath" =&gt; "path/to/sprite",     // path to the sprite image for CSS rule.
     "spriteFilename" =&gt; "icon-sprite",        // name of the generated CSS and PNG file.
 
     "retina" =&gt; array(2, 1),                  // defines the desired retina dimensions, you want.
     "retinaDelimiter" =&gt; "@",                 // delimiter inside the sprite image filename.
-    "cssFileExtension" =&gt; "css",              // CSS file extension
     "namespace" =&gt; "icon-",                   // namespace for your icon CSS classes
 
     "ignoreHover" =&gt; false,                   // set to true if you don't need hover icons
     "hoverSuffix" =&gt; "-hover",                // set to any suffix you want.
 
-    "globalTemplate" =&gt; "...",                // global template, which contains general CSS styles for all icons (remove line for default)
-    "eachTemplate" =&gt; "...",                  // template for each CSS icon class (remove line for default)
-    "eachHoverTemplate" =&gt; "...",             // template for each CSS icon hover class (remove line for default)
-    "ratioTemplate" =&gt; "..."                  // template for each retina media query (remove line for default)
+    "targets" =&gt; array(
+        // you can define multiple targets that will all reference the same png sprite
+        array(
+            "cssDirectory" =&gt; "/path/to/css",         // folder where you want the sprite CSS to be saved (folder has to be writable, too)
+            "cssFilename" =&gt; "icon-sprite.less",      // your CSS/Less/Sass target file
+            "globalTemplate" =&gt; "...",                // global template, which contains general CSS styles for all icons (remove line for default)
+            "eachTemplate" =&gt; "...",                  // template for each CSS icon class (remove line for default)
+            "eachHoverTemplate" =&gt; "...",             // template for each CSS icon hover class (remove line for default)
+            "ratioTemplate" =&gt; "..."                  // template for each retina media query (remove line for default)
+        )
+    )
+
 );
 </code></pre>
 
