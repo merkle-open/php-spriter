@@ -1,5 +1,5 @@
 .icon, .icon-after:after, .icon-before:before {
-	background-image: url({{spriteFilepath}}/{{spriteFilename}}.png);
+	background-image: url({{sprite}});
 	background-repeat: no-repeat;
 	background-size: {{width}} {{height}};
 	display: inline-block;

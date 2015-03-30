@@ -4,7 +4,7 @@ only screen and (min-device-pixel-ratio: {{ratio}}) {
 	.icon,
 	.icon-after:after,
 	.icon-before:before {
-		background-image: url({{spriteFilepath}}/{{spriteFilename}}{{delimiter}}{{ratio}}x.png);
+		background-image: url({{sprite}});
 		-webkit-background-size: {{width}} {{height}};
 		-moz-background-size: {{width}} {{height}};
 		background-size: {{width}} {{height}};
