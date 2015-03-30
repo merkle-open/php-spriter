@@ -168,6 +168,7 @@ You can use the following placeholders:
 * {{height}} = generated sprite height
 * {{spriteFilepath}} = configured sprite directory
 * {{spriteFilename}} = configured sprite filename
+* {{sprite}} = {{spriteFilepath}}/{{spriteFilename}}{{delimiter}}{{ratio}}x.png
 
 ## Contributing
 

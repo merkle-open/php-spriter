@@ -346,6 +346,7 @@ class Spriter {
 							"{{spriteDirectory}}" => $this->spriteFilepath, // deprecated
 							"{{spriteFilepath}}"  => $this->spriteFilepath,
 							"{{spriteFilename}}"  => $this->spriteFilename,
+							"{{sprite}}"          => $this->spriteFilepath . "/" . $this->spriteFilename . $this->retinaDelimiter . $ratio . "x.png",
 							"{{namespace}}"       => $this->namespace,
 							"{{ratio}}"           => $ratio,
 							"{{ratioFrag}}"       => $ratio . "/1",

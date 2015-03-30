@@ -2,7 +2,8 @@
 
 ## v1.2.2 - 2015-03
 
-* [feature] add possibility to configure tile margins
+* [feature] configuration: add possibility to configure tile margins
+* [maintenance] new placeholder {{sprite}} in ratio template
 
 ## v1.2.1 - 2015-01-29
 
