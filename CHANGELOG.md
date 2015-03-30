@@ -1,5 +1,9 @@
 # Changelog - PHP Spriter
 
+## v1.2.2 - 2015-03
+
+* [feature] add possibility to configure tile margins
+
 ## v1.2.1 - 2015-01-29
 
 * [fix] checksum file per target

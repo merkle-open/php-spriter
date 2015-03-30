@@ -5,7 +5,7 @@
  * @author Christian Stuff <christian.stuff@namics.com>
  */
 class Spriter {
-	public static $version = "1.2.1";
+	public static $version = "1.2.2";
 
 	public $hasGenerated = false;
 
@@ -14,6 +14,7 @@ class Spriter {
 	protected $cssDirectory;
 	protected $spriteFilepath;
 	protected $spriteFilename;
+	protected $tileMargin = 0;
 	protected $retina = array( 1 );
 	protected $retinaDelimiter = "@";
 	protected $cssFileExtension = "css"; // deprecated
@@ -186,6 +187,8 @@ class Spriter {
 		$free     = array();
 		$maxRatio = 1.0;
 
+		$tileMargin = $this->tileMargin;
+
 		if ( is_array( $this->retina ) && count( $this->retina ) > 1 ) {
 			$maxRatio = max( $this->retina );
 		}
@@ -203,17 +206,19 @@ class Spriter {
 						$icon->x = $free[ $i ]['x'];
 						$icon->y = $free[ $i ]['y'];
 
-						if ( $icon->height < $free[ $i ]['height'] ) {
+						if ( $icon->height + $tileMargin < $free[ $i ]['height'] ) {
 							array_push( $free, array(
 								'x'      => $free[ $i ]['x'],
-								'y'      => $free[ $i ]['y'] + $icon->height,
-								'width'  => $icon->width,
-								'height' => $free[ $i ]['height'] - $icon->height
+								'y'      => $free[ $i ]['y'] + $icon->height + $tileMargin,
+								'width'  => $free[ $i ]['width'],
+								'height' => $free[ $i ]['height'] - $icon->height - $tileMargin
 							) );
 						}
-						$free[ $i ]['x']     = $free[ $i ]['x'] + $icon->width;
-						$free[ $i ]['width'] = $free[ $i ]['width'] - $icon->width;
-						if ( $free[ $i ]['width'] == 0 ) {
+
+						$free[ $i ]['x']     = $free[ $i ]['x'] + $icon->width + $tileMargin;
+						$free[ $i ]['width'] = $free[ $i ]['width'] - $icon->width - $tileMargin;
+						$free[ $i ]['height'] = $icon->height;
+						if ( $free[ $i ]['width'] <= 0 ) {
 							array_splice( $free, $i, 1 );
 						}
 						break;
@@ -224,30 +229,30 @@ class Spriter {
 					// icon needs new space
 					if ( $canvas[1] >= $canvas[0] ) {
 						// increase canvas width
-						$canvas  = array( $canvas[0] + $icon->width, $canvas[1] );
+						$canvas  = array( $canvas[0] + $icon->width + $tileMargin, $canvas[1] );
 						$icon->x = $canvas[0] - $icon->width;
 						$icon->y = 0;
 
 						if ( $canvas[1] > $icon->height ) {
 							array_push( $free, array(
 								'x'      => $canvas[0] - $icon->width,
-								'y'      => $icon->height,
+								'y'      => $icon->height + $tileMargin,
 								'width'  => $icon->width,
-								'height' => $canvas[1] - $icon->height
+								'height' => $canvas[1] - $icon->height - $tileMargin
 							) );
 						}
 					}
 					else {
 						// increase canvas height
-						$canvas  = array( $canvas[0], $canvas[1] + $icon->height );
+						$canvas  = array( $canvas[0], $canvas[1] + $icon->height + $tileMargin );
 						$icon->x = 0;
 						$icon->y = $canvas[1] - $icon->height;
 
 						if ( $canvas[0] > $icon->width ) {
 							array_push( $free, array(
-								'x'      => $icon->width,
+								'x'      => $icon->width + $tileMargin,
 								'y'      => $canvas[1] - $icon->height,
-								'width'  => $canvas[0] - $icon->width,
+								'width'  => $canvas[0] - $icon->width - $tileMargin,
 								'height' => $icon->height
 							) );
 						}

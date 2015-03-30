@@ -34,6 +34,7 @@ Add...
         "spriteFilepath" => "path/to/sprite",     // path to the sprite image for CSS rule.
         "spriteFilename" => "icon-sprite",        // name of the generated CSS and PNG file.
 
+        "tileMargin" => 0,                        // margin in px between tiles (default 0)
         "retina" => array(2, 1),                  // defines the desired retina dimensions, you want.
         "retinaDelimiter" => "@",                 // delimiter inside the sprite image filename.
         "namespace" => "icon-",                   // namespace for your icon CSS classes
