@@ -14,6 +14,7 @@ class Spriter {
 	protected $cssDirectory;
 	protected $spriteFilepath;
 	protected $spriteFilename;
+	protected $spriteChecksum = false;
 	protected $tileMargin = 0;
 	protected $retina = array( 1 );
 	protected $retinaDelimiter = "@";
@@ -48,9 +49,9 @@ class Spriter {
 			// setup & generation
 			$this->setupIcons();
 			if ( $this->hasChanged() || $this->forceGenerate ) {
+				$this->generateChecksum();
 				$this->generateSprite();
 				$this->generateCSS();
-				$this->generateChecksum();
 				$this->hasGenerated = true;
 			}
 		}
@@ -215,8 +216,8 @@ class Spriter {
 							) );
 						}
 
-						$free[ $i ]['x']     = $free[ $i ]['x'] + $icon->width + $tileMargin;
-						$free[ $i ]['width'] = $free[ $i ]['width'] - $icon->width - $tileMargin;
+						$free[ $i ]['x']      = $free[ $i ]['x'] + $icon->width + $tileMargin;
+						$free[ $i ]['width']  = $free[ $i ]['width'] - $icon->width - $tileMargin;
 						$free[ $i ]['height'] = $icon->height;
 						if ( $free[ $i ]['width'] <= 0 ) {
 							array_splice( $free, $i, 1 );
@@ -371,11 +372,14 @@ class Spriter {
 	private function getChecksum() {
 		$content = "";
 
-		foreach ( $this->icons as $icon ) {
-			$content .= $icon->file . file_get_contents( $this->srcDirectory . "/" . $icon->file );
+		if ( $this->spriteChecksum === false ) {
+			foreach ( $this->icons as $icon ) {
+				$content .= $icon->file . file_get_contents( $this->srcDirectory . "/" . $icon->file );
+			}
+			$this->spriteChecksum = sha1( $content );
 		}
 
-		return sha1( $content );
+		return $this->spriteChecksum;
 	}
 
 	private function generateChecksum() {
