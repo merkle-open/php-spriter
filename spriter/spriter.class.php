@@ -24,6 +24,7 @@ class Spriter {
 	protected $eachTemplate;
 	protected $eachHoverTemplate;
 	protected $ratioTemplate;
+	protected $timestamp;
 	protected $forceGenerate = false;
 	protected $ignoreHover = false;
 	protected $hoverSuffix = "-hover";
@@ -49,6 +50,7 @@ class Spriter {
 			// setup & generation
 			$this->setupIcons();
 			if ( $this->hasChanged() || $this->forceGenerate ) {
+				$this->timestamp = date( 'YmdHis', time() );
 				$this->generateChecksum();
 				$this->generateSprite();
 				$this->generateCSS();
@@ -105,6 +107,15 @@ class Spriter {
 				return true;
 			}
 		}
+
+		// Check if the generated css file exists
+		foreach ( $this->targets as $target ) {
+			if ( !file_exists( $target['cssDirectory'] . "/" . $target['cssFilename'] ) ) {
+				return true;
+			}
+		}
+
+		// Checksum comparison
 		if ( file_exists( __DIR__ . "/" . $this->getChecksumName() ) ) {
 			$lastChecksum = file_get_contents( __DIR__ . "/" . $this->getChecksumName() );
 
@@ -114,12 +125,6 @@ class Spriter {
 		}
 		else {
 			return true;
-		}
-		// Check if the generated css file exists
-		foreach ( $this->targets as $target ) {
-			if ( !file_exists( $target['cssDirectory'] . "/" . $target['cssFilename'] ) ) {
-				return true;
-			}
 		}
 
 		return false;
@@ -317,13 +322,16 @@ class Spriter {
 			$result = "";
 
 			$replacements = array(
-				"{{spriteDirectory}}" => $this->spriteFilepath, // deprecated
 				"{{spriteFilepath}}"  => $this->spriteFilepath,
 				"{{spriteFilename}}"  => $this->spriteFilename,
-				"{{sprite}}"          => $this->spriteFilepath . "/" . $this->spriteFilename . ".png",
-				"{{namespace}}"       => $this->namespace,
+				"{{sprite}}"          => $this->spriteFilepath . "/" . $this->spriteFilename . ".png?" . $this->timestamp,
 				"{{width}}"           => $this->width . "px",
-				"{{height}}"          => $this->height . "px"
+				"{{height}}"          => $this->height . "px",
+				"{{namespace}}"       => $this->namespace,
+				"{{checksum}}"        => $this->spriteChecksum,
+				"{{timestamp}}"       => $this->timestamp,
+
+				"{{spriteDirectory}}" => $this->spriteFilepath // deprecated
 			);
 
 			$result .= str_replace(
@@ -344,16 +352,19 @@ class Spriter {
 				foreach ( $this->retina as $ratio ) {
 					if ( $ratio > 1 ) {
 						$replacements = array(
-							"{{spriteDirectory}}" => $this->spriteFilepath, // deprecated
 							"{{spriteFilepath}}"  => $this->spriteFilepath,
 							"{{spriteFilename}}"  => $this->spriteFilename,
-							"{{sprite}}"          => $this->spriteFilepath . "/" . $this->spriteFilename . $this->retinaDelimiter . $ratio . "x.png",
-							"{{namespace}}"       => $this->namespace,
+							"{{sprite}}"          => $this->spriteFilepath . "/" . $this->spriteFilename . $this->retinaDelimiter . $ratio . "x.png?" . $this->timestamp,
 							"{{ratio}}"           => $ratio,
 							"{{ratioFrag}}"       => $ratio . "/1",
 							"{{width}}"           => $this->width . "px",
 							"{{height}}"          => $this->height . "px",
-							"{{delimiter}}"       => $this->retinaDelimiter
+							"{{delimiter}}"       => $this->retinaDelimiter,
+							"{{namespace}}"       => $this->namespace,
+							"{{checksum}}"        => $this->spriteChecksum,
+							"{{timestamp}}"       => $this->timestamp,
+
+							"{{spriteDirectory}}" => $this->spriteFilepath, // deprecated
 						);
 						$ratios       = str_replace(
 							                array_keys( $replacements ),

@@ -105,12 +105,14 @@ Spriter comes with the following default template:
 
 The following placeholders can be used inside the global template:
 
-* {{namespace}} = configured namespace
-* {{width}} = generated sprite width
-* {{height}} = generated sprite height
 * {{spriteFilepath}} = configured sprite directory
 * {{spriteFilename}} = configured sprite filename
-* {{sprite}} = {{spriteFilepath}}/{{spriteFilename}}.png
+* {{sprite}} = {{spriteFilepath}}/{{spriteFilename}}.png?{{timestamp}}
+* {{width}} = generated sprite width
+* {{height}} = generated sprite height
+* {{namespace}} = configured namespace
+* {{checksum}} = sprite checksum
+* {{timestamp}} = generation time
 
 ### Each Template
 
@@ -160,15 +162,17 @@ This is the default template:
 
 You can use the following placeholders:
 
-* {{ratio}} = the retina ratio value
-* {{ratioFrag}} = the retina ratio value as a fragment (for opera)
-* {{delimiter}} = the configured delimiter
-* {{namespace}} = configured namespace
-* {{width}} = generated sprite width
-* {{height}} = generated sprite height
 * {{spriteFilepath}} = configured sprite directory
 * {{spriteFilename}} = configured sprite filename
-* {{sprite}} = {{spriteFilepath}}/{{spriteFilename}}{{delimiter}}{{ratio}}x.png
+* {{sprite}} = {{spriteFilepath}}/{{spriteFilename}}{{delimiter}}{{ratio}}x.png?{{timestamp}}
+* {{ratio}} = the retina ratio value
+* {{ratioFrag}} = the retina ratio value as a fragment (for opera)
+* {{width}} = generated sprite width
+* {{height}} = generated sprite height
+* {{delimiter}} = the configured delimiter
+* {{namespace}} = configured namespace
+* {{checksum}} = sprite checksum
+* {{timestamp}} = generation time
 
 ## Contributing
 
