@@ -71,7 +71,8 @@ new Spriter($your_spriter_configuration);
     "spriteFilepath" =&gt; "path/to/sprite",     // path to the sprite image for CSS rule.
     "spriteFilename" =&gt; "icon-sprite",        // name of the generated CSS and PNG file.
 
-    "retina" =&gt; array(2, 1),                  // defines the desired retina dimensions, you want.
+    "tileMargin" =&gt; 0,                        // margin in px between tiles in the highest 'retina' dimension (default is 0) - if you generate different 'retina' dimensions, take a common multiple of the selected variants.
+    "retina" =&gt; array(2, 1),                  // defines the desired 'retina' dimensions, you want.
     "retinaDelimiter" =&gt; "@",                 // delimiter inside the sprite image filename.
     "namespace" =&gt; "icon-",                   // namespace for your icon CSS classes
 
@@ -122,7 +123,7 @@ if($spriter-&gt;hasGenerated) {
 Spriter comes with the following default template:</p>
 
 <pre><code>.icon, .icon-after:after, .icon-before:before {
-    background-image: url({{spriteFilepath}}/{{spriteFilename}}.png);
+    background-image: url({{sprite}});
     background-repeat: no-repeat;
     background-size: {{width}} {{height}};
     display: inline-block;
@@ -149,12 +150,14 @@ Spriter comes with the following default template:</p>
 <p>The following placeholders can be used inside the global template:</p>
 
 <ul>
-<li>{{namespace}} = configured namespace</li>
-<li>{{width}} = generated sprite width</li>
-<li>{{height}} = generated sprite height</li>
 <li>{{spriteFilepath}} = configured sprite directory</li>
 <li>{{spriteFilename}} = configured sprite filename</li>
-<li>{{sprite}} = {{spriteFilepath}}/{{spriteFilename}}.png</li>
+<li>{{sprite}} = {{spriteFilepath}}/{{spriteFilename}}.png?{{timestamp}}</li>
+<li>{{width}} = generated sprite width</li>
+<li>{{height}} = generated sprite height</li>
+<li>{{namespace}} = configured namespace</li>
+<li>{{checksum}} = sprite checksum</li>
+<li>{{timestamp}} = generation time</li>
 </ul>
 
 <h3>
@@ -205,7 +208,7 @@ This is the default template:</p>
 only screen and (-o-min-device-pixel-ratio: {{ratioFrag}}),
 only screen and (min-device-pixel-ratio: {{ratio}}) {
     .icon, .icon-after:after, .icon-before:before {
-        background-image: url({{spriteFilepath}}/{{spriteFilename}}{{delimiter}}{{ratio}}x.png);
+        background-image: url({{sprite}});
         -webkit-background-size: {{width}} {{height}};
         -moz-background-size: {{width}} {{height}};
         background-size: {{width}} {{height}};
@@ -216,14 +219,17 @@ only screen and (min-device-pixel-ratio: {{ratio}}) {
 <p>You can use the following placeholders:</p>
 
 <ul>
-<li>{{ratio}} = the retina ratio value</li>
-<li>{{ratioFrag}} = the retina ratio value as a fragment (for opera)</li>
-<li>{{delimiter}} = the configured delimiter</li>
-<li>{{namespace}} = configured namespace</li>
-<li>{{width}} = generated sprite width</li>
-<li>{{height}} = generated sprite height</li>
 <li>{{spriteFilepath}} = configured sprite directory</li>
 <li>{{spriteFilename}} = configured sprite filename</li>
+<li>{{sprite}} = {{spriteFilepath}}/{{spriteFilename}}{{delimiter}}{{ratio}}x.png?{{timestamp}}</li>
+<li>{{ratio}} = the retina ratio value</li>
+<li>{{ratioFrag}} = the retina ratio value as a fragment (for opera)</li>
+<li>{{width}} = generated sprite width</li>
+<li>{{height}} = generated sprite height</li>
+<li>{{delimiter}} = the configured delimiter</li>
+<li>{{namespace}} = configured namespace</li>
+<li>{{checksum}} = sprite checksum</li>
+<li>{{timestamp}} = generation time</li>
 </ul>
 
 <h2>
