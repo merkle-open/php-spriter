@@ -1,6 +1,6 @@
 # Changelog - PHP Spriter
 
-## v1.2.2 - 2015-03
+## v1.2.2 - 2015-03-31
 
 * [feature] configuration: add possibility to configure tile margins
 * [feature] new placeholders {{checksum}} {{timestamp}} & add timestamp to placeholder {{sprite}}
